@@ -41,23 +41,16 @@ async function task() {
   const latestPNG = path.resolve(__dirname, `../data/latest.png`);
   fs.writeFileSync(latestPNG, pmg.toPNG());
 
+  return;
+
   const PDFFile = path.resolve(__dirname, `../data/${pmg.id}.pdf`);
   fs.writeFileSync(PDFFile, pmg.toPDF());
   await print(PDFFile);
   fs.unlinkSync(PDFFile);
 }
 
-import express from 'express';
+task();
 
-const app = express();
-
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './test.html'));
-});
-
-app.get('/test', async (req, res) => {
-  await task();
-  res.status(200).end();
-});
+import app from './express.mjs';
 
 app.listen(39080);

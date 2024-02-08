@@ -25,48 +25,23 @@ class Permage {
     this.rect(wx - s, hy - s, wx + s, hy + s, fill);
   }
 
-  draw(t) {
-    let theme = t === undefined ? Math.floor(Math.random() * 3) : t;
-    console.log(`theme: ${theme}`);
+  draw() {
+    this.draw2();
+  }
+
+  draw1() {
     for (let t = 0; t < 2 * Math.PI; t += 0.00005) {
-      let x1 = 4.5 * Math.sin(8 * t) * Math.cos(t * 17);
-      let y1 = 4.5 * Math.sin(8 * t) * Math.sin(t * 17);
-      let l = (2 * Math.PI) / 2;
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      if (theme == 0) {
-        if (t < l * 1) {
-          r = 255;
-          g = 220 - Math.floor(220 * (t / l));
-          b = 0;
-        } else {
-          r = 255 - Math.floor(32 * (t / l));
-          g = 0;
-          b = Math.floor(255 * (t / l));
-        }
-      } else if (theme == 1) {
-        if (t < l * 1) {
-          g = 255;
-          b = 220 - Math.floor(220 * (t / l));
-          r = 0;
-        } else {
-          g = 255 - Math.floor(32 * (t / l));
-          b = 0;
-          r = Math.floor(255 * (t / l));
-        }
-      } else if (theme == 2) {
-        if (t < l * 1) {
-          b = 255;
-          g = 220 - Math.floor(220 * (t / l));
-          r = 0;
-        } else {
-          b = 255 - Math.floor(32 * (t / l));
-          g = 0;
-          r = Math.floor(255 * (t / l));
-        }
-      }
-      this.dot(x1 * 200, y1 * 200 - 100, 1, `rgb(${r},${g},${b})`);
+      let x = 4.5 * Math.sin(8 * t) * Math.cos(t * 17);
+      let y = 4.5 * Math.sin(8 * t) * Math.sin(t * 17);
+      this.dot(x * 200, y * 200 - 100, 1);
+    }
+  }
+
+  draw2() {
+    for (let t = 0; t < 2 * Math.PI; t += 0.00005) {
+      let x = Math.sin(t * 6.0);
+      let y = Math.cos(t * 3) * Math.tan(t * 2);
+      this.dot(x * 500, y * 500, 1, `blue`);
     }
   }
 

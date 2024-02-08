@@ -1,0 +1,56 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(230, 230, 230);
+  font-family: 'IBM Plex Mono', 'Pretendard Variable', monospace;
+}
+input,
+textarea,
+button {
+  font-family: 'IBM Plex Mono', 'Pretendard Variable', monospace;
+}
+main {
+  display: flex;
+  height: 90vh;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+main > .right {
+  width: 24rem;
+  padding-left: 3rem;
+}
+
+#paper {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 1 / 1.5;
+  background: white;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+}
+#paper > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(20%);
+}
+
+#controls {
+  background: rgb(210, 210, 210);
+  padding: 1rem;
+  border-radius: 1rem;
+}
