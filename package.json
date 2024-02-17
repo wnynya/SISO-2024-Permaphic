@@ -1,15 +1,25 @@
 {
-  "name": "printer",
+  "name": "permage",
   "version": "1.0.0",
-  "description": "",
+  "author": "Wany <sung@wanyne.com> (https://wanyne.com)",
   "main": "src/app.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.mjs -p 29080",
+    "dev": "nodemon src/app.mjs -p 39080 -dev"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "canvas": "^2.11.2",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-template-engine": "^0.2.1"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "./config",
+      "./src/**/*"
+    ],
+    "ignore": [
+      "./src/public"
+    ],
+    "ext": "js,mjs,json,html"
   }
 }

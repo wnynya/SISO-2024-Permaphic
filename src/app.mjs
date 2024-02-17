@@ -49,8 +49,6 @@ async function task() {
   fs.unlinkSync(PDFFile);
 }
 
-task();
-
 import app from './express.mjs';
 
 app.listen(39080);

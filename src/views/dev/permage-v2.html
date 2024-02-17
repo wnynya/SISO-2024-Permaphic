@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="/resources/dev/permage-v2/permage.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+
+    <title>Permage Dev v2</title>
+  </head>
+
+  <body>
+    <main>
+      <section class="left">
+        <canvas id="paper"></canvas>
+      </section>
+
+      <section id="control" class="right">
+        <fieldset>
+          <legend><h3>Canvas drawing demo</h3></legend>
+          <fieldset>
+            <legend>Image 1</legend>
+            <div class="range">
+              <input
+                type="range"
+                name="image1-x"
+                min="-6000"
+                max="2000"
+                step="10"
+                value="-2000"
+              />
+              <label for="image1-x">x</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="image1-y"
+                min="-6000"
+                max="2000"
+                step="10"
+                value="0"
+              />
+              <label for="image1-y">y</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Image 2</legend>
+            <div class="range">
+              <input
+                type="range"
+                name="image2-x"
+                min="-6000"
+                max="2000"
+                step="10"
+                value="-1000"
+              />
+              <label for="image2-x">x</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="image2-y"
+                min="-6000"
+                max="2000"
+                step="10"
+                value="-1000"
+              />
+              <label for="image2-y">y</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Blend</legend>
+            <div class="range">
+              <input
+                type="range"
+                name="blend-a"
+                min="0"
+                max="100"
+                step="1"
+                value="50"
+              />
+              <label for="blend-a">a</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="blend-b"
+                min="0"
+                max="100"
+                step="1"
+                value="50"
+              />
+              <label for="blend-b">b</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Mode</legend>
+            <div>
+              <input type="radio" name="mode" value="1" checked />
+              <label for="1">Mode 1</label>
+            </div>
+            <div>
+              <input type="radio" name="mode" value="2" />
+              <label for="2">Mode 2</label>
+            </div>
+            <div>
+              <input type="radio" name="mode" value="3" />
+              <label for="3">Mode 3</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Theme</legend>
+            <div>
+              <input type="radio" name="theme" value="0" checked />
+              <label for="1">None</label>
+            </div>
+            <div>
+              <input type="radio" name="theme" value="1" />
+              <label for="1">Theme 1</label>
+            </div>
+            <div>
+              <input type="radio" name="theme" value="2" />
+              <label for="2">Theme 2</label>
+            </div>
+            <div>
+              <input type="radio" name="theme" value="3" />
+              <label for="3">Theme 3</label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Line Control</legend>
+            <div class="range">
+              <input
+                type="range"
+                name="line-m"
+                min="0"
+                max="4000"
+                step="10"
+                value="700"
+              />
+              <label for="line-m">배율</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="line-n"
+                min="0"
+                max="100"
+                step="1"
+                value="30"
+              />
+              <label for="line-n">노이즈</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="line-range-a"
+                min="0"
+                max="20"
+                step="1"
+                value="2"
+              />
+              <label for="line-range-a">a</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="line-range-b"
+                min="0"
+                max="20"
+                step="1"
+                value="2"
+              />
+              <label for="line-range-b">b</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="line-range-c"
+                min="0"
+                max="20"
+                step="1"
+                value="2"
+              />
+              <label for="line-range-c">c</label>
+            </div>
+            <div class="range">
+              <input
+                type="range"
+                name="line-range-d"
+                min="0"
+                max="20"
+                step="1"
+                value="2"
+              />
+              <label for="line-range-d">d</label>
+            </div>
+          </fieldset>
+          <button id="button-render">Render</button>
+        </fieldset>
+      </section>
+
+      <srction id="hidden">
+        <img id="image-test1" src="/resources/dev/permage-v2/IMG_1119.jpg" />
+        <img id="image-test2" src="/resources/dev/permage-v2/IMG_0768.jpg" />
+      </srction>
+    </main>
+
+    <script src="/resources/dev/permage-v2/permage.js"></script>
+  </body>
+</html>
