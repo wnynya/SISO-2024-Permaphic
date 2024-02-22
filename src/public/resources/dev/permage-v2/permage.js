@@ -50,27 +50,30 @@ function values() {
   v.blb = document.querySelector(`input[name="blend-b"]`).value;
 }
 
+let d = 2;
+let dd = 0.00005;
+
 function draw1() {
-  for (let t = 0; t < 2 * Math.PI; t += 0.0001) {
+  for (let t = 0; t < 2 * Math.PI; t += dd) {
     let x = Math.sin(t * v.a) * Math.cos(t * v.b);
     let y = Math.sin(t * v.c) * Math.sin(t * v.d);
-    dot(x * v.m, y * v.m, 4, color(t), v.n);
+    dot(x * v.m, y * v.m, d, color(t), v.n);
   }
 }
 
 function draw2() {
-  for (let t = 0; t < 2 * Math.PI; t += 0.0001) {
+  for (let t = 0; t < 2 * Math.PI; t += dd) {
     let x = Math.sin(t * v.a);
     let y = Math.cos(t * v.b) * Math.tan(t * v.c);
-    dot(x * v.m, y * v.m, 4, color(t), v.n);
+    dot(x * v.m, y * v.m, d, color(t), v.n);
   }
 }
 
 function draw3() {
-  for (let t = 0; t < 2 * Math.PI; t += 0.0001) {
+  for (let t = 0; t < 2 * Math.PI; t += dd) {
     let x = Math.cos(t * v.a);
     let y = Math.tan(t * v.b) * Math.tan(t * v.c);
-    dot(x * v.m, y * v.m, 4, color(t), v.n);
+    dot(x * v.m, y * v.m, d, color(t), v.n);
   }
 }
 
@@ -129,11 +132,11 @@ function color(t) {
 }
 
 function draw() {
-  rect(0, 0, canvas.width, canvas.height, 'white');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   values();
 
-  drawImage1();
-  drawImage2();
+  //drawImage1();
+  //drawImage2();
 
   if (v.mode == 1) {
     draw1();
@@ -142,14 +145,7 @@ function draw() {
   } else if (v.mode == 3) {
     draw3();
   }
+  window.requestAnimationFrame(draw);
 }
 
 draw();
-
-document.querySelector('#button-render').addEventListener('click', () => {
-  draw();
-});
-
-setInterval(() => {
-  draw();
-}, 100);

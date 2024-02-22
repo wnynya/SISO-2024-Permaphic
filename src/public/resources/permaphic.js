@@ -30,7 +30,9 @@ const PermaphicGUI = new (class {
     this.e.button.prev = document.querySelector('#button-prev');
     this.e.button.next = document.querySelector('#button-next');
     this.e.button.reset = document.querySelector('#button-reset');
+    this.e.button.reset2 = document.querySelector('#button-reset2');
     this.e.button.generate = document.querySelector('#button-generate');
+    this.e.button.print = document.querySelector('#button-print');
 
     this.addEventListener();
 
@@ -76,12 +78,13 @@ const PermaphicGUI = new (class {
             this.show('question', this.questionIndex + 1);
             break;
           }
-          case 'reset': {
+          case 'reset':
+          case 'reset2': {
             this.show('welcome');
             break;
           }
           case 'generate': {
-            this.show('generate-init');
+            this.show('graphic-init');
             break;
           }
           case 'print': {
@@ -106,29 +109,30 @@ const PermaphicGUI = new (class {
         event.stopPropagation();
         switch (target.getAttribute('name')) {
           case 'start': {
-            this.hoverMessage('질문 응답을 시작합니다.');
+            this.hoverMessage('질문 응답을 시작합니다');
             break;
           }
           case 'prev': {
-            this.hoverMessage('이전 질문으로 돌아갑니다.');
+            this.hoverMessage('이전 질문으로 돌아갑니다');
             break;
           }
           case 'next': {
-            this.hoverMessage('다음 질문으로 이동합니다.');
+            this.hoverMessage('다음 질문으로 이동합니다');
             break;
           }
-          case 'reset': {
+          case 'reset':
+          case 'reset2': {
             this.hoverMessage(
-              '질문 응답을 초기화하고 처음 화면으로 되돌아갑니다.'
+              '질문 응답을 초기화하고 처음 화면으로 되돌아갑니다'
             );
             break;
           }
           case 'generate': {
-            this.hoverMessage('질문 응답을 통해 그래픽을 생성합니다.');
+            this.hoverMessage('질문 응답을 통해 그래픽을 생성합니다');
             break;
           }
           case 'print': {
-            this.hoverMessage('생성된 그래픽을 출력합니다.');
+            this.hoverMessage('생성된 그래픽을 출력합니다');
             break;
           }
           default: {
@@ -160,6 +164,7 @@ const PermaphicGUI = new (class {
 
       case 'question-init': {
         this.setMain('question_loading');
+        this.statusMessage(``);
         this.questions = new PermaphicQuestions(this.questionSize);
         await delay(1500);
         this.show('question', 1);
@@ -241,6 +246,9 @@ const PermaphicGUI = new (class {
             } else {
               this.e.button.generate.disabled = false;
             }
+            if (index > this.questionSize - 2) {
+              test();
+            }
           });
         }
         break;
@@ -248,6 +256,7 @@ const PermaphicGUI = new (class {
 
       case 'graphic-init': {
         this.setMain('graphic_loading');
+        this.statusMessage(``);
         await delay(1500);
         this.show('graphic');
         break;
@@ -255,10 +264,20 @@ const PermaphicGUI = new (class {
 
       case 'graphic': {
         this.setMain('graphic');
+        test();
+        this.statusMessage(`인쇄 준비됨`);
         this.e.button.prev.disabled = true;
         this.e.button.next.disabled = true;
         this.e.button.reset.disabled = false;
         this.e.button.generate.disabled = false;
+        break;
+      }
+
+      case 'print': {
+        this.setMain('print_loading');
+        this.statusMessage(``);
+        await delay(1500);
+        this.show('graphic');
         break;
       }
     }
@@ -598,22 +617,10 @@ class PermaphicQuestions {
   }
 }
 
-const Permaphic = new (class Permaphic {
-  constructor() {
-    this.canvas = document.createElement('canvas');
-    this.canvas = document.querySelector('#canvas-preview');
-    this.canvas.width = 2000;
-    this.canvas.height = 2000;
+class Permaphic {
+  constructor(canvas) {
+    this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
-
-    const image1 = document.querySelector('#image-test1');
-    const image2 = document.querySelector('#image-test2');
-
-    setTimeout(() => {
-      this.image(image1, 0, 0, 1500, 1500, 'cover');
-      this.ctx.globalCompositeOperation = 'lighter';
-      this.image(image2, -1000, -1000, 3000, 3000, 'cover');
-    }, 1000);
   }
 
   rect(x1, y1, x2, y2, fill = 'black') {
@@ -682,7 +689,47 @@ const Permaphic = new (class Permaphic {
       }
     }
   }
-})();
+
+  text(content, x1, y1, size) {}
+}
+
+function test() {
+  const image1 = document.querySelector('#image-test1');
+  const image2 = document.querySelector('#image-test2');
+  const image3 = document.querySelector('#image-test3');
+  const image4 = document.querySelector('#image-test4');
+  const imagec3 = document.querySelector('#image-test-c3');
+
+  const cnv = document.createElement('canvas');
+  cnv.width = 2000;
+  cnv.height = 2000;
+  const cnvP = new Permaphic(cnv);
+
+  const cnvpre = document.querySelector('#canvas-preview');
+  cnvpre.width = cnvpre.offsetWidth;
+  cnvpre.height = cnvpre.offsetHeight;
+  const cnvpreP = new Permaphic(cnvpre);
+
+  const cnvgen = document.querySelector('#canvas-graphic');
+  cnvgen.width = cnvgen.offsetWidth * 2;
+  cnvgen.height = cnvgen.offsetHeight * 2;
+  const cnvgenP = new Permaphic(cnvgen);
+
+  cnvP.image(image4, 0, 0, 2000, 2000, 'cover');
+  cnvP.ctx.globalCompositeOperation = 'color-dodge';
+  cnvP.ctx.filter = 'blur(20px)';
+  cnvP.image(image1, 0, 0, 2000, 2000, 'cover');
+  cnvP.ctx.globalCompositeOperation = 'difference';
+  cnvP.ctx.filter = 'none';
+  cnvP.image(imagec3, 0, 0, 2000, 2000, 'cover');
+  cnvP.ctx.globalCompositeOperation = 'source-over';
+  cnvP.ctx.filter = 'none';
+  cnvP.ctx.fillStyle = 'rgb(255,255,0)';
+  cnvP.ctx.font = '100px Galmuri11';
+  cnvP.ctx.fillText('테스트 이미지 생성', 700, 800);
+  cnvpreP.image(cnvP.canvas, 0, 0, cnvpre.width, cnvpre.height, 'cover');
+  cnvgenP.image(cnvP.canvas, 0, 0, cnvgen.width, cnvgen.height, 'cover');
+}
 
 async function delay(ms = 0) {
   return new Promise((resolve) => {

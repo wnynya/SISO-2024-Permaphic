@@ -80,12 +80,34 @@
 
             <!-- 그래픽 생성 -->
             <section name="graphic" class="screen">
-              <img id="image-test1" src="/resources/img_test1.jpg" />
-              <img id="image-test2" src="/resources/img_test2.jpg" />
+              <section class="canvas">
+                <div class="wrapper" outline="2" frame>
+                  <canvas id="canvas-graphic"></canvas>
+                </div>
+              </section>
+
+              <section class="message">
+                <fieldset class="wrapper" outline="1">
+                  <legend>그래픽 생성 완료</legend>
+                  <p>
+                    그래픽이 성공적으로 생성되었습니다. [<u
+                      onclick="document.querySelector('#button-print').focus()"
+                      >인쇄</u
+                    >] 단추를 눌러 그래픽을 인쇄할 수 있습니다.
+                  </p>
+                </fieldset>
+                <br />
+                <div class="rightbutton">
+                  <button id="button-print" normal>인쇄(<u>P</u>)</button>
+                </div>
+                <div class="rightbutton" style="margin-top: 0.5rem">
+                  <button id="button-reset2" normal>처음으로(<u>R</u>)</button>
+                </div>
+              </section>
             </section>
 
-            <!-- 로딩: 그래픽 생성 -->
-            <section name="graphic_loading" class="screen loading">
+            <!-- 로딩: 인쇄 -->
+            <section name="print_loading" class="screen loading">
               <p>인쇄 중 <span class="loadingdots">...</span></p>
             </section>
           </div>
@@ -99,7 +121,12 @@
 
                 <section class="canvas">
                   <div class="wrapper" outline="2" frame>
-                    <canvas id="canvas-preview"></canvas>
+                    <section class="layers">
+                      <div class="message" layer>
+                        <p>응답 수집 중 <span class="loadingdots">...</span></p>
+                      </div>
+                      <canvas id="canvas-preview" layer></canvas>
+                    </section>
                   </div>
                 </section>
               </fieldset>
@@ -118,7 +145,7 @@
 
             <section class="bottom controls">
               <fieldset class="wrapper" outline="1">
-                <legend>제어 버튼</legend>
+                <legend>제어 센터</legend>
                 <button id="button-prev" normal disabled>
                   이전 질문(<u>B</u>)
                 </button>
@@ -152,6 +179,36 @@
       </footer>
     </div>
 
+    <div id="overlay" style="display: none">
+      <div class="resetalert">
+        <div class="header">
+          <p>초기화</p>
+          <div class="closebtn"></div>
+        </div>
+        <div class="content">
+          <p>정말 응답 결과를 초기화하고 처음으로 돌아가시겠습니까?</p>
+        </div>
+        <div class="buttons">
+          <button normal>예(<u>Y</u>)</button>
+          <button normal>아니오(<u>N</u>)</button>
+        </div>
+      </div>
+
+      <div class="info">
+        <div class="header">
+          <p>초기화</p>
+          <div class="closebtn"></div>
+        </div>
+        <div class="content">
+          <p>정말 응답 결과를 초기화하고 처음으로 돌아가시겠습니까?</p>
+        </div>
+        <div class="buttons">
+          <button>예(<u>Y</u>)</button>
+          <button>아니오(<u>N</u>)</button>
+        </div>
+      </div>
+    </div>
+
     <div id="background" layer>
       <layer class="bgcolor"></layer>
       <layer class="bgimage">
@@ -163,6 +220,14 @@
       <layer class="copy">
         <p></p>
       </layer>
+    </div>
+
+    <div id="hiddensources" style="display: none">
+      <img id="image-test1" src="/resources/img_test1.jpg" />
+      <img id="image-test2" src="/resources/img_test2.jpg" />
+      <img id="image-test3" src="/resources/IMG_0492.jpg" />
+      <img id="image-test4" src="/resources/IMG_0513.jpg" />
+      <img id="image-test-c3" src="/resources/c3.png" />
     </div>
     <script src="/resources/permaphic.js"></script>
   </body>

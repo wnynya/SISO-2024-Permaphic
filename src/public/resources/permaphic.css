@@ -1,4 +1,4 @@
-@import url('https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css');
+@import url('/resources/fonts/Galmuri/galmuri.css');
 
 :root {
   --bg: rgb(192, 192, 192);
@@ -26,12 +26,14 @@ body {
   line-height: 1.4rem;
   user-select: none;
   position: relative;
+  word-break: keep-all;
 }
 
 p {
   margin: 0;
 }
-img {
+img,
+canvas {
   image-rendering: pixelated;
 }
 
@@ -257,11 +259,35 @@ main > .left {
 main [name='welcome'] {
   word-break: keep-all;
 }
-main > .left [name='welcome'] img {
+main [name='welcome'] img {
   display: block;
   width: 100%;
 }
-main > .left [name='welcome'] .rightbutton {
+main [name='welcome'] .rightbutton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+main [name='graphic'] {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+main [name='graphic'] .canvas {
+  width: 22rem;
+}
+main [name='graphic'] .canvas canvas {
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+main [name='graphic'] .message {
+  width: 15rem;
+}
+main [name='graphic'] .message fieldset {
+  height: unset;
+}
+main [name='graphic'] .rightbutton {
   display: flex;
   justify-content: flex-end;
 }
@@ -276,9 +302,19 @@ main > .right .preview .canvas {
   height: 100%;
 }
 main > .right .preview .canvas canvas {
+  image-rendering: pixelated;
+}
+main > .right .preview .canvas .layers {
+  position: relative;
   width: 100%;
   height: 100%;
-  background: red;
+}
+main > .right .preview .canvas .message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  color: white;
 }
 main > .right .value p {
   display: flex;
@@ -325,6 +361,35 @@ footer .hover {
 }
 footer p {
   line-height: 1.1rem;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 20000000;
+}
+
+#overlay .resetalert {
+  width: 20rem;
+  height: 25rem;
+  background: var(--bg);
+}
+#overlay .header {
+  width: calc(100% - 0.4rem);
+  height: 1.5rem;
+  background: rgb(0, 0, 128);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 128, 1) 0%,
+    rgba(16, 132, 208, 1) 100%
+  );
+  color: white;
+  padding: 0 0.2rem;
+  margin-bottom: 0.1rem;
 }
 
 #background {

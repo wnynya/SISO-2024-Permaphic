@@ -6,6 +6,10 @@ router.get('/', (req, res) => {
   res.render('permaphic.html');
 });
 
+router.get('/dev/v1', (req, res) => {
+  res.render('dev/permage-v1.html');
+});
+
 router.get('/dev/v2', (req, res) => {
   res.render('dev/permage-v2.html');
 });
