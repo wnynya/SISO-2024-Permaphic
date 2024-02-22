@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Permaphic</title>
+
+    <link href="/resources/permaphic.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="permaphic">
+      <!-- header: 제목 -->
+      <header>Permaphic 그래픽 생성기</header>
+
+      <!-- nav: 상단 내비게이션 바 -->
+      <nav outline="1">
+        <button id="button-nav-file" nav>파일(<u>F</u>)</button>
+        <button id="button-nav-help" nav>도움말(<u>H</u>)</button>
+        <button id="button-nav-info" nav>정보(<u>A</u>)</button>
+      </nav>
+
+      <!-- main: 내용 -->
+      <main>
+        <section class="left screens">
+          <div class="wrapper" outline="2">
+            <!-- 로딩: 초기 페이지 -->
+            <section name="welcome_loading" class="screen loading">
+              <p>
+                Permaphic 그래픽 생성기 로딩 중
+                <span class="loadingdots">...</span>
+              </p>
+            </section>
+
+            <!-- 초기 페이지 -->
+            <section name="welcome" class="screen">
+              <img src="/resources/permaphic-logo-h100.png" />
+              <br />
+              <fieldset class="wrapper" outline="1">
+                <legend>Permaphic 그래픽 생성기 소개</legend>
+                <p>
+                  Permaphic 그래픽 생성기는 질문과 답변을 통해 당신만의 그래픽을
+                  찾아나갈 수 있도록 도와드립니다. Permaphic 그래픽 생성기를
+                  사용하여 잃어버린 그래픽을 찾아나가십시오.
+                </p>
+              </fieldset>
+              <br />
+              <div class="rightbutton">
+                <button id="button-start" normal>시작하기(<u>S</u>)</button>
+              </div>
+            </section>
+
+            <!-- 로딩: 질문 응답 페이지 -->
+            <section name="question_loading" class="screen loading">
+              <p>질문 생성 중 <span class="loadingdots">...</span></p>
+            </section>
+
+            <!-- 질문 응답 페이지 -->
+            <section name="question" class="screen">
+              <section class="">
+                <fieldset class="wrapper" outline="1">
+                  <legend>응답 요령</legend>
+
+                  <p>
+                    응답 선택지 중 가장 마음에 드는 응답을 선택하여 주십시오.
+                  </p>
+                  <p>
+                    응답 선택 후에는 [<u
+                      onclick="document.querySelector('#button-next').focus()"
+                      >다음 질문</u
+                    >] 단추를 눌러 계속 진행하시기 바랍니다.
+                  </p>
+                </fieldset>
+              </section>
+
+              <section class="form"></section>
+            </section>
+
+            <!-- 로딩: 그래픽 생성 -->
+            <section name="graphic_loading" class="screen loading">
+              <p>그래픽 생성 중 <span class="loadingdots">...</span></p>
+            </section>
+
+            <!-- 그래픽 생성 -->
+            <section name="graphic" class="screen">
+              <img id="image-test1" src="/resources/img_test1.jpg" />
+              <img id="image-test2" src="/resources/img_test2.jpg" />
+            </section>
+
+            <!-- 로딩: 그래픽 생성 -->
+            <section name="graphic_loading" class="screen loading">
+              <p>인쇄 중 <span class="loadingdots">...</span></p>
+            </section>
+          </div>
+        </section>
+
+        <section class="right">
+          <div class="wrapper" outline="2">
+            <section class="top preview">
+              <fieldset class="wrapper" outline="1">
+                <legend>그래픽 미리보기</legend>
+
+                <section class="canvas">
+                  <div class="wrapper" outline="2" frame>
+                    <canvas id="canvas-preview"></canvas>
+                  </div>
+                </section>
+              </fieldset>
+            </section>
+
+            <section class="middle value">
+              <fieldset class="wrapper" outline="1">
+                <legend>응답 값</legend>
+
+                <p>0x00 <span id="value-1">00 00 00 00 00 00 00 00</span></p>
+                <p>0x00 <span id="value-2">00 00 00 00 00 00 00 00</span></p>
+                <p>0x00 <span id="value-3">00 00 00 00 00 00 00 00</span></p>
+                <p>0x00 <span id="value-4">00 00 00 00 00 00 00 00</span></p>
+              </fieldset>
+            </section>
+
+            <section class="bottom controls">
+              <fieldset class="wrapper" outline="1">
+                <legend>제어 버튼</legend>
+                <button id="button-prev" normal disabled>
+                  이전 질문(<u>B</u>)
+                </button>
+                <button id="button-next" normal disabled>
+                  다음 질문(<u>N</u>)
+                </button>
+                <button id="button-reset" normal disabled>
+                  초기화(<u>R</u>)
+                </button>
+                <button id="button-generate" normal disabled>
+                  생성(<u>G</u>)
+                </button>
+              </fieldset>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <!-- footer: 상태 표시줄 -->
+      <footer>
+        <section class="status">
+          <wrapper outline="3">
+            <p id="message-status" class="message"></p>
+          </wrapper>
+        </section>
+        <section class="hover">
+          <wrapper outline="3">
+            <p id="message-hover" class="message"></p>
+          </wrapper>
+        </section>
+      </footer>
+    </div>
+
+    <div id="background" layer>
+      <layer class="bgcolor"></layer>
+      <layer class="bgimage">
+        <img src="/resources/bg.gif" />
+      </layer>
+      <layer class="logo">
+        <img src="/resources/permaphic-logo-w200.png" />
+      </layer>
+      <layer class="copy">
+        <p></p>
+      </layer>
+    </div>
+    <script src="/resources/permaphic.js"></script>
+  </body>
+</html>

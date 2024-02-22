@@ -3,7 +3,7 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.render('root.html');
+  res.render('permaphic.html');
 });
 
 router.get('/dev/v2', (req, res) => {
