@@ -24,7 +24,7 @@ function getImage(n) {
   });
 }
 
-function getCompositeOperation(n) {
+function getMix(n) {
   let opertaions = ['difference', 'color-dodge', 'hue', 'luminosity'];
   return opertaions[n[0] % opertaions.length];
 }
@@ -55,7 +55,7 @@ async function render() {
   const canvas = document.createElement('canvas');
   canvas.width = 1000;
   canvas.height = 1000;
-  const perma = new Permaphic(canvas);
+  const perma = new Canvas(canvas);
 
   const images = await Promise.all([
     getImage(n[0][0]),
@@ -66,17 +66,17 @@ async function render() {
 
   perma.image(images[0], 0, 0, 1000, 1000, 'cover');
 
-  perma.ctx.globalCompositeOperation = getCompositeOperation(n[1]);
+  perma.ctx.globalCompositeOperation = getMix(n[1]);
   perma.ctx.filter = getFilter(n[2]);
   console.log(perma.ctx.globalCompositeOperation, perma.ctx.filter);
   perma.image(images[1], 0, 0, 1000, 1000, 'cover');
 
-  perma.ctx.globalCompositeOperation = getCompositeOperation(n[3]);
+  perma.ctx.globalCompositeOperation = getMix(n[3]);
   perma.ctx.filter = getFilter(n[4]);
   console.log(perma.ctx.globalCompositeOperation, perma.ctx.filter);
   perma.image(images[2], 0, 0, 1000, 1000, 'cover');
 
-  perma.ctx.globalCompositeOperation = getCompositeOperation(n[6]);
+  perma.ctx.globalCompositeOperation = getMix(n[6]);
   perma.ctx.filter = getFilter(n[7]);
   console.log(perma.ctx.globalCompositeOperation, perma.ctx.filter);
   perma.image(images[3], 0, 0, 1000, 1000, 'cover');
@@ -91,16 +91,8 @@ async function render() {
   const dCanvas = document.querySelector('#canvas');
   dCanvas.width = dCanvas.offsetWidth * 2;
   dCanvas.height = dCanvas.offsetHeight * 2;
-  const dPerma = new Permaphic(dCanvas);
+  const dPerma = new Canvas(dCanvas);
   dPerma.image(perma.canvas, 0, 0, dCanvas.width, dCanvas.height, 'cover');
-}
-
-function graph1(perma, a, b, c, d, m, n) {
-  for (let t = 0; t < 2 * Math.PI; t += 0.0001) {
-    let x = Math.sin(t * a) * Math.cos(t * b);
-    let y = Math.sin(t * c) * Math.sin(t * d);
-    perma.dot(x * m, y * m, 1, 'red', n);
-  }
 }
 
 init();

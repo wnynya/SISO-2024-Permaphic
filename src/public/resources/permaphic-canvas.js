@@ -1,14 +1,33 @@
 'use strict';
 
-class Permaphic {
+class Canvas {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
+
+    this.#updateWidth();
+  }
+
+  #updateWidth() {
+    this.width = this.canvas.width;
+    this.height = this.canvas.height;
+  }
+
+  fit(multiply = 1) {
+    this.canvas.width = this.canvas.offsetWidth * multiply;
+    this.canvas.height = this.canvas.offsetHeight * multiply;
+    this.#updateWidth();
+    return this;
   }
 
   rect(x1, y1, x2, y2, fill = 'black') {
-    this.ctx.fillStyle = fill;
-    this.ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
+    if (fill == 'clear') {
+      this.ctx.clearRect(x1, y1, x2 - x1, y2 - y1);
+    } else {
+      this.ctx.fillStyle = fill;
+      this.ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
+    }
+    return this;
   }
 
   dot(x, y, size = 1, fill = 'black', noise = 0) {
@@ -19,9 +38,14 @@ class Permaphic {
     hy += Math.random() * noise - noise / 2;
     const s = size / 2;
     this.rect(wx - s, hy - s, wx + s, hy + s, fill);
+    return this;
   }
 
   image(image, x1, y1, x2, y2, fit = 'none') {
+    if (image instanceof Canvas) {
+      image = image.canvas;
+    }
+
     let dw = x2 - x1;
     let dh = y2 - y1;
     let iw = image.width;
@@ -71,7 +95,33 @@ class Permaphic {
         break;
       }
     }
+
+    return this;
   }
 
-  text(content, font, fill = 'black', x1, y1) {}
+  text(content, font, fill = 'black', x1, y1) {
+    return this;
+  }
+
+  fill(fill = 'white') {
+    if (typeof fill === 'string') {
+      this.rect(0, 0, this.canvas.width, this.canvas.height, fill);
+    } else {
+      this.image(fill, 0, 0, this.canvas.width, this.canvas.height, 'cover');
+    }
+  }
+
+  clear() {
+    this.fill('clear');
+  }
+
+  mix(value = 'none') {
+    this.ctx.globalCompositeOperation = value;
+    return this;
+  }
+
+  filter(value = 'none') {
+    this.ctx.filter = value;
+    return this;
+  }
 }

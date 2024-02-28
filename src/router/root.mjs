@@ -5,7 +5,7 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.render('root.html');
+  res.render('permaphic.html');
 });
 
 router.get('/dev', (req, res) => {
@@ -19,8 +19,8 @@ router.get('/api/images', (req, res) => {
 });
 
 router.post('/api/print', (req, res) => {
-  api.print(req).then(() => {
-    res.send('ok');
+  api.print(req.body.image).then(() => {
+    res.send('{}');
   });
 });
 

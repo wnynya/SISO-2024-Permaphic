@@ -51,7 +51,7 @@ Annotations [
 RememberOpenedFiles = true
 RememberStatePerDocument = true
 RestoreSession = true
-UiLanguage = kr
+UiLanguage = en
 EnableTeXEnhancements = false
 DefaultDisplayMode = automatic
 DefaultZoom = fit page

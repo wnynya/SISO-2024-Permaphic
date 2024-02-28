@@ -5,11 +5,7 @@
 
     <title>Permaphic 1.0</title>
 
-    <link
-      href="/resources/pages/root/root.css"
-      type="text/css"
-      rel="stylesheet"
-    />
+    <link href="/resources/permaphic.css" type="text/css" rel="stylesheet" />
   </head>
 
   <body>
@@ -38,7 +34,7 @@
 
             <!-- 초기 페이지 -->
             <section name="welcome" class="screen">
-              <img src="/resources/pages/root/permaphic-logo-h100.png" />
+              <img src="/resources/permaphic-logo-h100.png" />
               <br />
               <fieldset class="wrapper" outline="1">
                 <legend>Permaphic 그래픽 생성기 소개</legend>
@@ -186,58 +182,24 @@
       </footer>
     </div>
 
-    <div id="overlay" style="display: none">
-      <div class="resetalert">
-        <div class="header">
-          <p>초기화</p>
-          <div class="closebtn"></div>
-        </div>
-        <div class="content">
-          <p>정말 응답 결과를 초기화하고 처음으로 돌아가시겠습니까?</p>
-        </div>
-        <div class="buttons">
-          <button normal>예(<u>Y</u>)</button>
-          <button normal>아니오(<u>N</u>)</button>
-        </div>
-      </div>
-
-      <div class="info">
-        <div class="header">
-          <p>초기화</p>
-          <div class="closebtn"></div>
-        </div>
-        <div class="content">
-          <p>정말 응답 결과를 초기화하고 처음으로 돌아가시겠습니까?</p>
-        </div>
-        <div class="buttons">
-          <button>예(<u>Y</u>)</button>
-          <button>아니오(<u>N</u>)</button>
-        </div>
-      </div>
-    </div>
-
     <div id="background" layer>
       <layer class="bgcolor"></layer>
       <layer class="bgimage">
-        <img src="/resources/pages/root/root-bg.gif" />
+        <img src="/resources/permaphic-bg.gif" />
       </layer>
       <layer class="logo">
-        <img src="/resources/pages/root/permaphic-logo-w200.png" />
+        <img src="/resources/permaphic-logo-w200.png" />
       </layer>
       <layer class="copy">
         <p></p>
       </layer>
     </div>
 
-    <div id="hidden-sources" style="display: none">
-      <img id="image-test1" src="/resources/permaphic/img_test1.jpg" />
-      <img id="image-test2" src="/resources/permaphic/img_test2.jpg" />
-      <img id="image-test3" src="/resources/permaphic/IMG_0492.jpg" />
-      <img id="image-test4" src="/resources/permaphic/IMG_0513.jpg" />
-      <img id="image-test-c3" src="/resources/permaphic/c3.png" />
-    </div>
+    <div id="hidden-sources" style="display: none"></div>
 
-    <script src="/resources/permaphic/permaphic.js"></script>
-    <script src="/resources/pages/root/root.js"></script>
+    <script src="/resources/md5.min.js"></script>
+    <script src="/resources/permaphic-canvas.js"></script>
+
+    <script src="/resources/permaphic.js"></script>
   </body>
 </html>

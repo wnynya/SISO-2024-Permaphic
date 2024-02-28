@@ -1,11 +1,19 @@
 const PermaphicGUI = new (class {
   constructor() {
+    this.renderer = new Worker('/resources/permaphic-renderer.js');
+
     this.questions = [];
-    this.questionSize = 5;
+    this.questionSize = 10;
     this.questionIndex = 0;
 
-    this.afktimer = 0;
+    this.setElements();
+    this.addEventListener();
+    this.runAsyncTasks();
 
+    this.show('welcome');
+  }
+
+  setElements() {
     this.e = {};
 
     this.e.root = document.querySelector('#permaphic');
@@ -25,6 +33,8 @@ const PermaphicGUI = new (class {
 
     this.e.screen_question_form = this.e.screen_question.querySelector('.form');
 
+    // Button
+
     this.e.button = {};
     this.e.button.start = document.querySelector('#button-start');
     this.e.button.prev = document.querySelector('#button-prev');
@@ -34,26 +44,59 @@ const PermaphicGUI = new (class {
     this.e.button.generate = document.querySelector('#button-generate');
     this.e.button.print = document.querySelector('#button-print');
 
-    this.addEventListener();
+    // Canvas
 
-    let loadingdots = '';
-    setInterval(() => {
-      loadingdots += '.';
-      if (loadingdots.length >= 4) {
-        loadingdots = '';
-      }
-      const ldv = loadingdots
-        .padEnd(3, ' ')
-        .replace(/ /g, '<span style="color: transparent;">.</span>');
-      for (const lde of document.querySelectorAll('.loadingdots')) {
-        lde.innerHTML = ldv;
-      }
-    }, 250);
+    this.e.canvas = {};
+    this.canvas = {};
 
-    this.show('welcome');
+    this.e.canvas.graphic = document.querySelector('#canvas-graphic');
+    this.e.canvas.graphic.width = this.e.canvas.graphic.offsetWidth;
+    this.e.canvas.graphic.height = this.e.canvas.graphic.offsetHeight;
+    this.e.canvas.graphicOff =
+      this.e.canvas.graphic.transferControlToOffscreen();
+    //this.canvas.graphic = new Canvas(this.e.canvas.graphic).fit();
+
+    this.e.canvas.preview = document.querySelector('#canvas-preview');
+    this.e.canvas.preview.width = this.e.canvas.preview.offsetWidth;
+    this.e.canvas.preview.height = this.e.canvas.preview.offsetHeight;
+    this.e.canvas.previewOff =
+      this.e.canvas.preview.transferControlToOffscreen();
+    //this.canvas.preview = new Canvas(this.e.canvas.preview).fit();
+
+    this.renderer.postMessage(
+      {
+        event: 'init-graphic',
+        data: this.e.canvas.graphicOff,
+      },
+      [this.e.canvas.graphicOff]
+    );
+
+    this.renderer.postMessage(
+      {
+        event: 'init-preview',
+        data: this.e.canvas.previewOff,
+      },
+      [this.e.canvas.previewOff]
+    );
   }
 
   addEventListener() {
+    const _this = this;
+
+    this.renderer.onmessage = (e) => {
+      const object = e.data;
+      const event = object.event;
+      const data = object.data;
+
+      switch (event) {
+        case 'render': {
+          _this.canvas.graphic.fill(this.e.canvas.renderOffscreen);
+          _this.canvas.preview.fill(this.e.canvas.renderOffscreen);
+          break;
+        }
+      }
+    };
+
     for (const name in this.e.button) {
       const button = this.e.button[name];
       button.setAttribute('name', name);
@@ -146,9 +189,27 @@ const PermaphicGUI = new (class {
     });
   }
 
+  runAsyncTasks() {
+    this.afktimer = 0;
+    let loadingdots = '';
+    setInterval(() => {
+      loadingdots += '.';
+      if (loadingdots.length >= 4) {
+        loadingdots = '';
+      }
+      const ldv = loadingdots
+        .padEnd(3, ' ')
+        .replace(/ /g, '<span style="color: transparent;">.</span>');
+      for (const lde of document.querySelectorAll('.loadingdots')) {
+        lde.innerHTML = ldv;
+      }
+    }, 250);
+  }
+
   async show(screen, ...args) {
     switch (screen) {
       case 'welcome': {
+        this.clearRender();
         this.setMain('welcome_loading');
         await delay(750);
         this.setMain('welcome');
@@ -239,15 +300,16 @@ const PermaphicGUI = new (class {
         )) {
           btn.addEventListener('change', (event) => {
             const index = event.target.getAttribute('question') * 1;
-            const awnser = event.target.getAttribute('value') * 1;
-            this.questions.set(index, awnser);
+            const answer = event.target.getAttribute('value') * 1;
+            this.questions.set(index, answer);
             if (index < this.questionSize) {
               this.e.button.next.disabled = false;
             } else {
               this.e.button.generate.disabled = false;
             }
-            if (index > this.questionSize - 2) {
-              render();
+
+            if (this.questions.answer >= this.questions.size - 4) {
+              this.fillRender();
             }
           });
         }
@@ -264,7 +326,7 @@ const PermaphicGUI = new (class {
 
       case 'graphic': {
         this.setMain('graphic');
-        render();
+        this.fillRender();
         this.statusMessage(`인쇄 준비됨`);
         this.e.button.prev.disabled = true;
         this.e.button.next.disabled = true;
@@ -276,7 +338,11 @@ const PermaphicGUI = new (class {
       case 'print': {
         this.setMain('print_loading');
         this.statusMessage(``);
-        await delay(1500);
+        this.renderer.postMessage({
+          event: 'print',
+          data: {},
+        });
+        await delay(3000);
         this.show('graphic');
         break;
       }
@@ -293,7 +359,19 @@ const PermaphicGUI = new (class {
     }
   }
 
-  displayPreview() {}
+  fillRender() {
+    this.renderer.postMessage({
+      event: 'render-fill',
+      data: this.questions.seeds(),
+    });
+  }
+
+  clearRender() {
+    this.renderer.postMessage({
+      event: 'render-clear',
+      data: {},
+    });
+  }
 
   statusMessage(message) {
     this.e.footer_status.innerHTML = message;
@@ -591,6 +669,7 @@ class PermaphicQuestions {
         ],
       },
     ];
+    this.answer = 0;
 
     for (let i = 1; i <= this.size; i++) {
       const q = this.#getRandomQuestion();
@@ -614,45 +693,48 @@ class PermaphicQuestions {
 
   set(n, a) {
     this.data[n].a = a;
+
+    this.answer = 0;
+    for (let i = 1; i <= this.size; i++) {
+      let q = this.get(i);
+      if (q.a != -1) {
+        this.answer++;
+      }
+    }
+  }
+
+  seeds() {
+    function seed(source) {
+      const hash = md5(source);
+      const list = [];
+      for (let i = 0; i < hash.length; i += 2) {
+        list.push(Number.parseInt(hash[i] + hash[i + 1], 16));
+      }
+      return list;
+    }
+
+    let seeds = [];
+
+    for (let i = 1; i <= this.size; i++) {
+      let q = this.get(i);
+      if (q.a === -1) {
+        seeds.push(seed(`${q.q}`));
+      } else {
+        seeds.push(seed(`${q.q}:[${q.a}]${q.o[q.a]}`));
+      }
+    }
+
+    return seeds;
   }
 }
 
-function render() {
-  const image1 = document.querySelector('#image-test1');
-  const image2 = document.querySelector('#image-test2');
-  const image3 = document.querySelector('#image-test3');
-  const image4 = document.querySelector('#image-test4');
-  const imagec3 = document.querySelector('#image-test-c3');
-
-  const cnv = document.createElement('canvas');
-  cnv.width = 2000;
-  cnv.height = 2000;
-  const cnvP = new Permaphic(cnv);
-
-  const cnvpre = document.querySelector('#canvas-preview');
-  cnvpre.width = cnvpre.offsetWidth;
-  cnvpre.height = cnvpre.offsetHeight;
-  const cnvpreP = new Permaphic(cnvpre);
-
-  const cnvgen = document.querySelector('#canvas-graphic');
-  cnvgen.width = cnvgen.offsetWidth * 2;
-  cnvgen.height = cnvgen.offsetHeight * 2;
-  const cnvgenP = new Permaphic(cnvgen);
-
-  cnvP.image(image4, 0, 0, 2000, 2000, 'cover');
-  cnvP.ctx.globalCompositeOperation = 'color-dodge';
-  cnvP.ctx.filter = 'blur(20px)';
-  cnvP.image(image1, 0, 0, 2000, 2000, 'cover');
-  cnvP.ctx.globalCompositeOperation = 'difference';
-  cnvP.ctx.filter = 'none';
-  cnvP.image(imagec3, 0, 0, 2000, 2000, 'cover');
-  cnvP.ctx.globalCompositeOperation = 'source-over';
-  cnvP.ctx.filter = 'none';
-  cnvP.ctx.fillStyle = 'rgb(255,255,0)';
-  cnvP.ctx.font = '100px Galmuri11';
-  cnvP.ctx.fillText('테스트 이미지 생성', 700, 800);
-  cnvpreP.image(cnvP.canvas, 0, 0, cnvpre.width, cnvpre.height, 'cover');
-  cnvgenP.image(cnvP.canvas, 0, 0, cnvgen.width, cnvgen.height, 'cover');
+function numbers(source) {
+  const hash = md5(source);
+  const list = [];
+  for (let i = 0; i < hash.length; i += 2) {
+    list.push(Number.parseInt(hash[i] + hash[i + 1], 16));
+  }
+  return list;
 }
 
 async function delay(ms = 0) {
