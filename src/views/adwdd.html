@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Permaphic</title>
+
+    <link href="/resources/permaphic.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <header>Permaphic 그래픽 생성기</header>
+      <nav outline="1">
+        <button id="button-nav-file" nav>파일(<u>F</u>)</button>
+        <button id="button-nav-help" nav>도움말(<u>H</u>)</button>
+        <button id="button-nav-info" nav>정보(<u>A</u>)</button>
+      </nav>
+      <section class="content">
+        <section class="left">
+          <div class="wrapper" outline="2">
+            <section class="welcome">
+              <img src="/resources/permaphic-logo-x500.png" />
+
+              <button id="button-start" normal>시작하기(<u>S</u>)</button>
+            </section>
+
+            <section class="question">
+              <section class=""></section>
+
+              <section class="form"></section>
+
+              <p>3. 더 하고 싶은 것은 무었인가요?</p>
+              <br />
+              <div checkbox>
+                <input type="radio" name="test" />
+                <div class="checkbox">
+                  <div class="dot"></div>
+                </div>
+                <label>테스트 체크박스</label>
+              </div>
+              <br />
+              <div checkbox>
+                <input type="radio" name="test" />
+                <div class="checkbox">
+                  <div class="dot"></div>
+                </div>
+                <label>테스트 체크박스</label>
+              </div>
+              <br />
+              <div checkbox>
+                <input type="radio" name="test" />
+                <div class="checkbox">
+                  <div class="dot"></div>
+                </div>
+                <label>테스트 체크박스</label>
+              </div>
+              <br />
+              <div checkbox>
+                <input type="radio" name="test" />
+                <div class="checkbox">
+                  <div class="dot"></div>
+                </div>
+                <label>테스트 체크박스</label>
+              </div>
+            </section>
+          </div>
+        </section>
+        <section class="right">
+          <div class="wrapper" outline="2">
+            <section class="top preview">
+              <fieldset class="wrapper" outline="1">
+                <legend>그래픽 미리보기</legend>
+
+                <section class="canvas">
+                  <div class="wrapper" outline="2" frame>
+                    <canvas></canvas>
+                  </div>
+                </section>
+              </fieldset>
+            </section>
+
+            <section class="middle value">
+              <fieldset class="wrapper" outline="1">
+                <legend>응답 값</legend>
+
+                <p>0x00 <span id="value-1">00 00 00 00 00 00 00 00</span></p>
+                <p>0x00 <span id="value-2">00 00 00 00 00 00 00 00</span></p>
+                <p>0x00 <span id="value-3">00 00 00 00 00 00 00 00</span></p>
+                <p>0x00 <span id="value-4">00 00 00 00 00 00 00 00</span></p>
+              </fieldset>
+            </section>
+
+            <section class="bottom controls">
+              <fieldset class="wrapper" outline="1">
+                <legend>제어 버튼</legend>
+                <button id="button-prev" normal disabled>
+                  이전 질문(<u>B</u>)
+                </button>
+                <button id="button-next" normal disabled>
+                  다음 질문(<u>N</u>)
+                </button>
+                <button id="button-reset" normal disabled>
+                  처음으로(<u>R</u>)
+                </button>
+                <button id="button-print" normal disabled>
+                  인쇄(<u>P</u>)
+                </button>
+              </fieldset>
+            </section>
+          </div>
+        </section>
+      </section>
+      <footer>상태 표시줄 메시지 질문 응답 중 (3/20)</footer>
+    </main>
+  </body>
+</html>
