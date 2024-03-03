@@ -204,6 +204,19 @@ const PermaphicGUI = new (class {
         lde.innerHTML = ldv;
       }
     }, 250);
+
+    let timer;
+    let _this = this;
+    function setNewtimer() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        _this.show('welcome');
+      }, 1000 * 300);
+    }
+    document.addEventListener('mousemove', () => {
+      setNewtimer();
+    });
+    setNewtimer();
   }
 
   async show(screen, ...args) {

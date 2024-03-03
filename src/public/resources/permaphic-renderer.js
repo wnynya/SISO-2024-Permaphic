@@ -76,6 +76,7 @@ function getFilter(seed) {
 
 async function render(el, seeds) {
   const can = new Canvas(el);
+  can.clear();
 
   const images = await Promise.all([
     getImage(seeds[0]),
