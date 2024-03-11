@@ -1,6 +1,6 @@
 {
-  "name": "permage",
-  "version": "1.0.0",
+  "name": "permaphic",
+  "version": "1.0",
   "author": "Wany <sung@wanyne.com> (https://wanyne.com)",
   "main": "src/app.mjs",
   "scripts": {
