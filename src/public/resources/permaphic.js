@@ -355,7 +355,7 @@ const PermaphicGUI = new (class {
           event: 'print',
           data: {},
         });
-        await delay(3000);
+        await delay(12000);
         this.show('graphic');
         break;
       }

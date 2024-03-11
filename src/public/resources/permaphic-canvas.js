@@ -115,7 +115,7 @@ class Canvas {
     this.fill('clear');
   }
 
-  mix(value = 'none') {
+  mix(value = 'source-over') {
     this.ctx.globalCompositeOperation = value;
     return this;
   }

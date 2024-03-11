@@ -39,6 +39,12 @@ onmessage = (e) => {
 
 async function init() {
   images = await (await fetch('/api/images')).json();
+  const fontFace = new FontFace(
+    'Galmuri11',
+    "local('Galmuri11 Regular'), url('/resources/fonts/Galmuri/Galmuri11.woff2') format('woff2'), url('/resources/fonts/Galmuri/Galmuri11.ttf') format('truetype')"
+  );
+  fonts.add(fontFace);
+  await fontFace.load();
 }
 init();
 
@@ -95,6 +101,17 @@ async function render(el, seeds) {
 
   can.mix(getMix(seeds[7])).filter(getFilter(seeds[9]));
   can.image(images[3], 0, 0, 1000, 1000, 'cover');
+
+  can.mix().filter();
+
+  can.ctx.fillStyle = 'black';
+  can.ctx.fillRect(320, 880, 360, 20);
+
+  can.ctx.fillStyle = 'yellow';
+  can.ctx.textBaseline = 'bottom';
+  can.ctx.textAlign = 'center';
+  can.ctx.font = '15px Galmuri11';
+  can.ctx.fillText(`Permaphic 1.0 / ${new Date().toJSON()}`, 500, 900);
 
   clear();
   canvas.graphic.fill(can);
